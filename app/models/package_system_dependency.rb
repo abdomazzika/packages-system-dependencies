@@ -1,0 +1,2 @@
+class PackageSystemDependency < ApplicationRecord
+end
