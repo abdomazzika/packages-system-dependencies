@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170720174811) do
+ActiveRecord::Schema.define(version: 20170720182229) do
 
-  create_table "os", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+  create_table "operating_systems", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string "name"
     t.string "edition"
     t.string "package_manager"
@@ -22,12 +22,12 @@ ActiveRecord::Schema.define(version: 20170720174811) do
 
   create_table "package_system_dependencies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.bigint "package_id"
-    t.bigint "os_id"
+    t.bigint "operating_system_id"
     t.bigint "system_dependency_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["os_id"], name: "index_package_system_dependencies_on_os_id"
-    t.index ["package_id", "os_id"], name: "index_package_system_dependencies_on_package_id_and_os_id"
+    t.index ["operating_system_id"], name: "index_package_system_dependencies_on_operating_system_id"
+    t.index ["package_id", "operating_system_id"], name: "index_package_id_and_os_id"
     t.index ["package_id"], name: "index_package_system_dependencies_on_package_id"
     t.index ["system_dependency_id"], name: "index_package_system_dependencies_on_system_dependency_id"
   end
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20170720174811) do
   create_table "packages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string "name"
     t.string "version"
+    t.integer "parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
