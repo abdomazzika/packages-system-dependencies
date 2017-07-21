@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class PackageSystemDependenciesController < ApplicationController
-  before_action :set_package_system_dependency, only: [:show, :update, :destroy]
+  before_action :set_package_system_dependency, only: %i(show update destroy)
 
   # GET /package_system_dependencies
   def index
@@ -39,13 +41,14 @@ class PackageSystemDependenciesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_package_system_dependency
-      @package_system_dependency = PackageSystemDependency.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def package_system_dependency_params
-      params.fetch(:package_system_dependency, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_package_system_dependency
+    @package_system_dependency = PackageSystemDependency.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def package_system_dependency_params
+    params.fetch(:package_system_dependency, {})
+  end
 end

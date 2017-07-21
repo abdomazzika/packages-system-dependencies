@@ -10,12 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170720182229) do
+ActiveRecord::Schema.define(version: 20170721072220) do
 
   create_table "operating_systems", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string "name"
     t.string "edition"
     t.string "package_manager"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "package_dependencies", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.integer "package_a_id", null: false
+    t.integer "package_b_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

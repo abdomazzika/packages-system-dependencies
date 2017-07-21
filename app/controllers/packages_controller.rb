@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class PackagesController < ApplicationController
-  before_action :set_package, only: [:show, :update, :destroy]
+  before_action :set_package, only: %i(show update destroy)
 
   # GET /packages
   def index
@@ -39,13 +41,14 @@ class PackagesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_package
-      @package = Package.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def package_params
-      params.require(:package).permit(:name, :version)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_package
+    @package = Package.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def package_params
+    params.require(:package).permit(:name, :version)
+  end
 end

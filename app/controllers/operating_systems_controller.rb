@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class OperatingSystemsController < ApplicationController
-  before_action :set_operating_system, only: [:show, :update, :destroy]
+  before_action :set_operating_system, only: %i(show update destroy)
 
   # GET /operating_systems
   def index
@@ -39,13 +41,14 @@ class OperatingSystemsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_operating_system
-      @operating_system = OperatingSystem.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def operating_system_params
-      params.require(:operating_system).permit(:name, :edition, :package_manager)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_operating_system
+    @operating_system = OperatingSystem.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def operating_system_params
+    params.require(:operating_system).permit(:name, :edition, :package_manager)
+  end
 end

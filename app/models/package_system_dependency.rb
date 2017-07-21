@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PackageSystemDependency < ApplicationRecord
   belongs_to :package
   belongs_to :operating_system
@@ -9,6 +11,6 @@ class PackageSystemDependency < ApplicationRecord
 
   def number_of_system_dependencies
     PackageSystemDependency.where(package: package,
-                                  operating_system: operating_system).count
+                                  operating_system: operating_system,).count
   end
 end
