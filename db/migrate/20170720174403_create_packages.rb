@@ -5,7 +5,6 @@ class CreatePackages < ActiveRecord::Migration[5.1]
     create_table :packages do |t|
       t.string :name
       t.string :version
-      t.integer :parent_id
 
       t.timestamps
     end

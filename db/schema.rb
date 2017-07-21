@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(version: 20170721072220) do
   end
 
   create_table "package_dependencies", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.integer "package_a_id", null: false
-    t.integer "package_b_id", null: false
+    t.integer "first_package_id", null: false
+    t.integer "second_package_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -42,7 +42,6 @@ ActiveRecord::Schema.define(version: 20170721072220) do
   create_table "packages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string "name"
     t.string "version"
-    t.integer "parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -8,8 +8,8 @@ class Package < ApplicationRecord
            source: :operating_system, through: :package_system_dependencies
   has_and_belongs_to_many(:packages,
                           join_table: 'package_dependencies',
-                          foreign_key: 'package_a_id',
-                          association_foreign_key: 'package_b_id',)
+                          foreign_key: 'first_package_id',
+                          association_foreign_key: 'second_package_id',)
 
   def package_dependencies
     dependencies = packages
@@ -30,7 +30,7 @@ class Package < ApplicationRecord
       break unless flag
     end
 
-    dependencies
+    dependencies << self
   end
 
   def number_of_package_dependencies
