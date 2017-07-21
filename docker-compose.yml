@@ -1,0 +1,37 @@
+version: '2'
+
+services:
+  database:
+    image: 'mysql:5.7.16'
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+  web: &base
+    build:
+      context: .
+      dockerfile: ./.docker/Dockerfile-dev
+    environment:
+      MIGRATION: 1
+      RACK_ENV: development
+      RAILS_ENV: development
+      COMMAND: bin/rails s -b 0.0.0.0
+    links:
+      - database
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/var/app/
+    volumes_from:
+      - bundle
+
+    stdin_open: true
+    tty: true
+
+  bundle:
+  # 'image' will vary depending on your docker-compose
+  # project name. You may need to run `docker-compose build web`
+  # before this works.
+    image: ruby:2.1.9
+    volumes:
+      - /bundle
