@@ -19,13 +19,19 @@ class PackageSystemDependenciesController < ApplicationController
   # GET /lookups/package_system_dependencies,  params: [packages]
   def search
     request_params = prepare_search_params
+    if request_params[:packages].empty?
+      return render json: {
+        messeage: 'please provide us with packages to provide you with dependencies',
+      },
+                    status: 200
+    end
 
     operating_system = OperatingSystem.find_by(
       name: request_params[:operating_system][:name],
       vendor: request_params[:operating_system][:vendor],
       bits: request_params[:operating_system][:bits],
     )
-    package_manager = operating_system.package_manager
+    package_manager = operating_system.package_manager if operating_system
 
     packages = []
     request_params[:packages].each do |package|
@@ -33,6 +39,13 @@ class PackageSystemDependenciesController < ApplicationController
       package_version = package[:version]
 
       packages << Package.find_by(name: package_name, version: package_version)
+    end
+
+    if packages.empty?
+      return render json: {
+        messeage: "sorry we haven't any data about your gems",
+      },
+                    status: 404
     end
 
     packages_dependencies = []
