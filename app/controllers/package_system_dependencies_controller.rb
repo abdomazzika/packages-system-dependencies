@@ -106,7 +106,7 @@ class PackageSystemDependenciesController < ApplicationController
   # Only allow a trusted parameter "white list" through.
   def package_system_dependency_params
     data = params.require(:package_system_dependency).permit(
-      package: %i(name version), operating_system: %i(name edition),
+      package: %i(name version), operating_system: %i(name vendor bits package_manager),
       system_dependency: %i(name version),
     )
     package = Package.find_by(name: data[:package][:name],
