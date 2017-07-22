@@ -19,12 +19,15 @@ class PackageSystemDependenciesController < ApplicationController
   # GET /lookups/package_system_dependencies,  params: [packages]
   def search
     request_params = prepare_search_params
-    packages = []
+
     operating_system = OperatingSystem.find_by(
-      name: request_params[:operating_system][:name], edition: request_params[:operating_system][:edition],
+      name: request_params[:operating_system][:name],
+      vendor: request_params[:operating_system][:vendor],
+      bits: request_params[:operating_system][:bits],
     )
     package_manager = operating_system.package_manager
 
+    packages = []
     request_params[:packages].each do |package|
       package_name = package[:name]
       package_version = package[:version]
@@ -96,7 +99,8 @@ class PackageSystemDependenciesController < ApplicationController
     package = Package.find_by(name: data[:package][:name],
                               version: data[:package][:version],)
     operating_system = OperatingSystem.find_by(name: data[:operating_system][:name],
-                                               edition: data[:operating_system][:edition],)
+                                               vendor: data[:operating_system][:vendor],
+                                               bits: data[:operating_system][:bits],)
     system_dependency = SystemDependency.find_by(name: data[:system_dependency][:name],
                                                  version: data[:system_dependency][:version],)
 
@@ -109,7 +113,7 @@ class PackageSystemDependenciesController < ApplicationController
 
   def prepare_search_params
     data = params.require(:lookup).permit(
-      packages: %i(name version), operating_system: %i(name edition),
+      packages: %i(name version), operating_system: %i(name vendor bits),
     )
 
     {

@@ -14,7 +14,8 @@ ActiveRecord::Schema.define(version: 20170721072220) do
 
   create_table "operating_systems", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string "name"
-    t.string "edition"
+    t.string "vendor"
+    t.string "bits"
     t.string "package_manager"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

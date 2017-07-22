@@ -23,7 +23,11 @@ class PackageDependenciesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def package_dependency_params
-    data = params.require(:package_dependency).permit(first_package: %i(name version), second_package: %i(name version))
+    data = params.require(:package_dependency).permit(
+      first_package: %i(name version),
+      second_package: %i(name version),
+    )
+
     first_package = Package.find_by(name: data[:first_package][:name],
                                     version: data[:first_package][:version],)
     second_package = Package.find_by(name: data[:second_package][:name],
