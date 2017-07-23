@@ -60,14 +60,6 @@ docker-compose up
 docker ps
 ```
 
-* To Create and Configure database 
-
-```bash
-docker-compose run web rake db:create
-docker-compose run web rake db:schema:load
-docker-compose run web rake db:migrate
-```
-
 * OR you can just setup the application manually  by using
 
 ```bash
@@ -240,6 +232,43 @@ curl -XPOST -H "Content-Type: application/json" "http://<host_ip>:3000/api/looku
 
 ```
 
+* Then we will connect to our test app by:
+
+```bash
+docker exec -it <TEST-CONTAINER-ID> bash
+```
+
+go to the app directory:
+
+```bash
+cd app
+```
+add in your Gemfile:
+
+```bash
+echo gem 'system_dependencies', :git => 'git://github.com/abdomazzika/system_dependencies.git' >> Gemfile
+```
+
+then run bundle install to install your gem:
+
+```bash
+bundle install
+```
+
+connect to rails console by:
+
+```bash
+rails c
+```
+
+And finally let us run the below commands and see what we have:
+
+```ruby
+@my_app = SystemDependencies::Libraries.new('localhost', '3001')
+@my_app.local_gems
+@my_app.operating_system_info
+@my_app.system_dependencies
+```
 Now we finished from the app logic and how to make this app up and running.
 Thanks.
 

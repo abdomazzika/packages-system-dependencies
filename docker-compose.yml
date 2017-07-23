@@ -7,7 +7,7 @@ services:
       - '3306:3306'
     environment:
       MYSQL_ROOT_PASSWORD: root
-  web: &base
+  system_dependencies: &base
     build:
       context: .
       dockerfile: ./.docker/Dockerfile-dev
@@ -21,17 +21,9 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - .:/var/app/
-    volumes_from:
-      - bundle
-
+      - .:/myapp
     stdin_open: true
     tty: true
-
-  bundle:
-  # 'image' will vary depending on your docker-compose
-  # project name. You may need to run `docker-compose build web`
-  # before this works.
-    image: ruby:2.1.9
-    volumes:
-      - /bundle
+  test:
+    image: 'rails'
+    command: bash -c "rails new app && cat"

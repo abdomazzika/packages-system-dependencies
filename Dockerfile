@@ -1,4 +1,4 @@
-FROM ruby:2.1.9
+FROM ruby:2.3.3
 RUN apt-get update -qq && apt-get install -y build-essential \
                                              mysql-client \
                                              nodejs \
@@ -6,13 +6,9 @@ RUN apt-get update -qq && apt-get install -y build-essential \
                                              libxslt1-dev \
                                              vim \
                                              less
-ENV app /var/app
-RUN mkdir -p $app
-WORKDIR $app
+RUN mkdir /myapp
+WORKDIR /myapp
+ADD . /myapp
+RUN gem install bundler
 
-ENV BUNDLE_GEMFILE=$app/Gemfile \
-  BUNDLE_JOBS=6 \
-  BUNDLE_PATH=/bundle
-
-ADD ./.docker/entry_point.sh /etc/
-ENTRYPOINT "/etc/entry_point.sh"
+ENTRYPOINT "/myapp/.docker/entry_point.sh"
