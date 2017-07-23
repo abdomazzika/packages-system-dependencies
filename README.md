@@ -264,7 +264,7 @@ rails c
 And finally let us run the below commands and see what we have:
 
 ```ruby
-@my_app = SystemDependencies::Libraries.new('localhost', '3001')
+@my_app = SystemDependencies::Libraries.new('localhost', '3000')
 @my_app.local_gems
 @my_app.operating_system_info
 @my_app.system_dependencies
